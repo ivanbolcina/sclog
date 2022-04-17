@@ -1,0 +1,10 @@
+[db]
+type = "MySQL"
+url = "host=127.0.0.1;port=3306;db=sclog;user=sclog;password=sclog;compress=true;auto-reconnect=true"
+
+[sign]
+keyname = "AKEY"
+module = "/usr/lib/softhsm/libsofthsm2.so"
+slot = "sclog"
+pin = "0000"
+algorithm = "EMSA4(SHA-256)"

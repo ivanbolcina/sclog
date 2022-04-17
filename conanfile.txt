@@ -1,0 +1,16 @@
+[requires]
+poco/1.11.1
+log4cplus/2.0.5
+nlohmann_json/3.10.5
+botan/2.19.1
+pistache/cci.20201127
+date/3.0.1
+openssl/1.1.1l
+tinycbor/0.6.0
+tomlplusplus/2.5.0
+
+[generators]
+cmake
+
+[options]
+pistache:shared=False
