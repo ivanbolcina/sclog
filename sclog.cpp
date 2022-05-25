@@ -1,37 +1,25 @@
 #include <pistache/endpoint.h>
 #include <pistache/http_headers.h>
 #include <pistache/router.h>
-#include <pistache/mime.h>
 #include <pistache/http.h>
 #include <log4cplus/loggingmacros.h>
 #include <log4cplus/configurator.h>
 #include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/stringhelper.h>
 #include <log4cplus/helpers/fileinfo.h>
-#include <log4cplus/loggingmacros.h>
 #include <log4cplus/initializer.h>
-#include "Poco/MD5Engine.h"
-#include "Poco/DigestStream.h"
 #include "Poco/Data/Session.h"
 #include "Poco/Data/SessionPool.h"
 #include "Poco/Data/MySQL/Connector.h"
 #include "Poco/DateTime.h"
 #include "Poco/Data/LOB.h"
-#include "Poco/Data/LOBStream.h"
 #include "Poco/Data/DataException.h"
 #include <nlohmann/json.hpp>
-#include <algorithm>
 #include <functional>
-#include <cctype>
-#include <locale>
 #include <iostream>
-#include <sstream>
+#include <memory>
 #include <string>
-#include <iostream>
 #include <vector>
 #include <cbor.h>
-#include <iostream>
-#include <mutex>
 #include <toml.hpp>
 #include "utils.h"
 #include "entry.hpp"
@@ -66,7 +54,7 @@ public:
         auto config = toml::parse_file("configuration.toml");
         auto db_type = config["db"]["type"].value_or("MySQL");
         auto db_url = config["db"]["url"].value_or("");
-        if (db_url == "")
+        if (string(db_url).empty())
             throw logic_error("configuration:db:url");
         conf_version = 1;
         conf_key_name = config["sign"]["keyname"].value_or("AKEY");
@@ -77,7 +65,7 @@ public:
         httpEndpoint->init(opts);
         setupRoutes();
         httpEndpoint->setHandler(router.handler());
-        pool = std::shared_ptr<Poco::Data::SessionPool>(new SessionPool(db_type, db_url));
+        pool = std::make_shared<Poco::Data::SessionPool>(db_type, db_url);
         ostringstream oss;
         oss << "Audit service running at port " << port;
         LOG4CPLUS_INFO(logger, oss.str().c_str());
