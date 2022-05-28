@@ -10,6 +10,7 @@ find_package(Threads REQUIRED)
 include(${CMAKE_CURRENT_SOURCE_DIR}/conan/conanbuildinfo.cmake)
 conan_basic_setup()
 
-add_executable(sclog sclog.cpp signer.cpp)
+include_directories(include)
+add_executable(sclog src/sclog.cpp src/signer.cpp)
 target_link_libraries(sclog pistache ${CONAN_LIBS})
 

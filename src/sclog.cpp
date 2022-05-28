@@ -21,9 +21,9 @@
 #include <vector>
 #include <cbor.h>
 #include <toml.hpp>
-#include "utils.h"
-#include "entry.hpp"
-#include "signer.hpp"
+#include "../include/utils.h"
+#include "../include/entry.hpp"
+#include "../include/signer.hpp"
 
 using namespace std;
 using namespace log4cplus;

@@ -33,8 +33,8 @@
 #include <memory>
 #include <vector>
 #include <toml.hpp>
-#include "utils.h"
-#include "signer.hpp"
+#include "../include/utils.h"
+#include "../include/signer.hpp"
 
 using namespace std;
 using namespace log4cplus;
